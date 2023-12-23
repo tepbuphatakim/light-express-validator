@@ -1,0 +1,19 @@
+{
+  "name": "light-express-validator",
+  "version": "1.0.0",
+  "description": "A super light weight express validator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "validator",
+    "light",
+    "weight",
+    "express",
+    "validator"
+  ],
+  "author": "Tepbuphata Kim",
+  "license": "ISC"
+}
