@@ -1,7 +1,6 @@
 function validate(toValidate) {
   return function (req, res, next) {
-    const payload = req.body;
-    iterateFields({ toValidate, payload });
+    iterateFields({ toValidate, payload: req.body });
     next();
   };
 }
@@ -18,7 +17,6 @@ function iterateFields({ toValidate, payload }) {
   for (const field of fields) {
     const rules = toValidate[field].split('|');
     const data = payload[field];
-    console.log('fieldData: ', data);
 
     iterateRules({ rules, field, data });
   }
@@ -36,14 +34,14 @@ function iterateFields({ toValidate, payload }) {
 function iterateRules({ rules, field, data }) {
   for (const rule of rules) {
     if (rule === 'required' && isRequired(data)) {
-      const error = new Error(`${field} is required`);
+      const error = new Error(`The ${field} field is required.`);
       error.status = 400;
       throw error;
     }
     if (/^min:/.test(rule)) {
       const length = rule.split(':').at(-1);
       if (isMinChars(data, length)) {
-        const error = new Error(`${field} must be more than ${length} chars`);
+        const error = new Error(`The ${field} field must be at least ${length} characters.`);
         error.status = 400;
         throw error;
       }
@@ -51,7 +49,7 @@ function iterateRules({ rules, field, data }) {
     if (/^max:/.test(rule)) {
       const length = rule.split(':').at(-1);
       if (isMaxChars(data, length)) {
-        const error = new Error(`${field} must be less than 8 chars`);
+        const error = new Error(`The ${field} field must be at most ${length} characters.`);
         error.status = 400;
         throw error;
       }
@@ -72,6 +70,6 @@ function isMaxChars(data, length) {
   return String(data).length > length;
 }
 
-export default {
+module.exports = {
   validate,
 };
