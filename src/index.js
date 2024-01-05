@@ -33,7 +33,7 @@ function iterateFields({ toValidate, payload }) {
  */
 function iterateRules({ rules, field, data }) {
   for (const rule of rules) {
-    if (rule === 'required' && isRequired(data)) {
+    if (rule === 'required' && isEmpty(data)) {
       const error = new Error(`The ${field} field is required.`);
       error.status = 400;
       throw error;
@@ -41,7 +41,9 @@ function iterateRules({ rules, field, data }) {
     if (/^min:/.test(rule)) {
       const length = rule.split(':').at(-1);
       if (isMinChars(data, length)) {
-        const error = new Error(`The ${field} field must be at least ${length} characters.`);
+        const error = new Error(
+          `The ${field} field must be at least ${length} characters.`
+        );
         error.status = 400;
         throw error;
       }
@@ -49,16 +51,23 @@ function iterateRules({ rules, field, data }) {
     if (/^max:/.test(rule)) {
       const length = rule.split(':').at(-1);
       if (isMaxChars(data, length)) {
-        const error = new Error(`The ${field} field must be at most ${length} characters.`);
+        const error = new Error(
+          `The ${field} field must be at most ${length} characters.`
+        );
         error.status = 400;
         throw error;
       }
+    }
+    if (rule === 'numeric' && !isNumeric(data)) {
+      const error = new Error(`The ${field} field must be a number.`);
+      error.status = 400;
+      throw error;
     }
   }
   return true;
 }
 
-function isRequired(data) {
+function isEmpty(data) {
   return !data && data !== 0;
 }
 
@@ -68,6 +77,10 @@ function isMinChars(data, length) {
 
 function isMaxChars(data, length) {
   return String(data).length > length;
+}
+
+function isNumeric(value) {
+  return !isNaN(value);
 }
 
 module.exports = {
