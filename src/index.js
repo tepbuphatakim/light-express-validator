@@ -63,6 +63,14 @@ function iterateRules({ rules, field, data }) {
       error.status = 400;
       throw error;
     }
+    if (/^decimal:/.test(rule)) {
+      const decimal = rule.split(':').at(-1);
+      if (!isDecimal(data, decimal)) {
+        const error = new Error(`The ${field} field must have ${decimal} decimal places.`);
+        error.status = 400;
+        throw error;
+      }
+    }
   }
   return true;
 }
@@ -81,6 +89,11 @@ function isMaxChars(data, length) {
 
 function isNumeric(value) {
   return !isNaN(value);
+}
+
+function isDecimal(value, decimalPlaces = 0) {
+  const regex = new RegExp(`^-?\\d+(\\.\\d{${decimalPlaces}})?$`);
+  return regex.test(value.toString());
 }
 
 module.exports = {
