@@ -15,5 +15,9 @@
     "validator"
   ],
   "author": "Tepbuphata Kim",
-  "license": "ISC"
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "lib/**/*"
+  ]
 }
