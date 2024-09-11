@@ -1,6 +1,6 @@
 const express = require('express');
 const request = require('supertest');
-const { validate } = require('../lib/validator');
+const validate = require('../index');
 
 describe('validator', () => {
   let app;
@@ -172,6 +172,38 @@ describe('validator', () => {
       }
     );
     const response = await request(app).post('/test').send({ amount: 1.12 });
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Validation passed');
+  });
+
+  test('should fail boolean validation', async () => {
+    app.post(
+      '/test',
+      validate({
+        is_vote: 'required|boolean',
+      }),
+      (req, res) => {
+        res.status(200).json({ message: 'Validation passed' });
+      }
+    );
+    const response = await request(app).post('/test').send({ is_vote: 1 });
+    expect(response.status).toBe(400);
+    expect(response.body.fields.is_vote).toBe(
+      'The is_vote field must be true or false.'
+    );
+  });
+
+  test('should pass boolean validation', async () => {
+    app.post(
+      '/test',
+      validate({
+        is_vote: 'required|boolean',
+      }),
+      (req, res) => {
+        res.status(200).json({ message: 'Validation passed' });
+      }
+    );
+    const response = await request(app).post('/test').send({ is_vote: false });
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Validation passed');
   });

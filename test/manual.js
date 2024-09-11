@@ -1,4 +1,4 @@
-const { validate } = require('./lib/validator');
+const validate = require('../index');
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -6,7 +6,7 @@ app.use(express.json());
 app.get(
   '/test',
   validate({
-    name: 'required|min:1',
+    name: 'boolean',
     email: 'required|min:2',
   }),
   (req, res) => {
