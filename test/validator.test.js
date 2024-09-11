@@ -207,4 +207,40 @@ describe('validator', () => {
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Validation passed');
   });
+
+  test('should fail date validation', async () => {
+    app.post(
+      '/test',
+      validate({
+        date: 'date',
+      }),
+      (req, res) => {
+        res.status(200).json({ message: 'Validation passed' });
+      }
+    );
+    const response = await request(app)
+      .post('/test')
+      .send({ date: '2023-13-45' });
+    expect(response.status).toBe(400);
+    expect(response.body.fields.date).toBe(
+      'The date field must be a valid date.'
+    );
+  });
+
+  test('should pass date validation', async () => {
+    app.post(
+      '/test',
+      validate({
+        date: 'date',
+      }),
+      (req, res) => {
+        res.status(200).json({ message: 'Validation passed' });
+      }
+    );
+    const response = await request(app)
+      .post('/test')
+      .send({ date: new Date() });
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Validation passed');
+  });
 });
