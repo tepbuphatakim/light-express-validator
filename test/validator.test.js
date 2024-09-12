@@ -16,7 +16,7 @@ describe('validator', () => {
       validate({
         name: 'required',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -31,7 +31,7 @@ describe('validator', () => {
       validate({
         name: 'required',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -46,7 +46,7 @@ describe('validator', () => {
       validate({
         password: 'required|min:8',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -65,7 +65,7 @@ describe('validator', () => {
       validate({
         password: 'required|min:8',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -82,7 +82,7 @@ describe('validator', () => {
       validate({
         name: 'required|max:10',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -101,7 +101,7 @@ describe('validator', () => {
       validate({
         name: 'required|max:10',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -118,7 +118,7 @@ describe('validator', () => {
       validate({
         amount: 'numeric',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -135,7 +135,7 @@ describe('validator', () => {
       validate({
         amount: 'numeric',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -150,7 +150,7 @@ describe('validator', () => {
       validate({
         amount: 'decimal:2',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -167,7 +167,7 @@ describe('validator', () => {
       validate({
         amount: 'decimal:2',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -182,7 +182,7 @@ describe('validator', () => {
       validate({
         is_vote: 'required|boolean',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -199,7 +199,7 @@ describe('validator', () => {
       validate({
         is_vote: 'required|boolean',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -214,7 +214,7 @@ describe('validator', () => {
       validate({
         date: 'date',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
@@ -233,13 +233,45 @@ describe('validator', () => {
       validate({
         date: 'date',
       }),
-      (req, res) => {
+      (_, res) => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
     const response = await request(app)
       .post('/test')
       .send({ date: new Date() });
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Validation passed');
+  });
+
+  test('should fail integer validation', async () => {
+    app.post(
+      '/test',
+      validate({
+        count: 'integer',
+      }),
+      (_, res) => {
+        res.status(200).json({ message: 'Validation passed' });
+      }
+    );
+    const response = await request(app).post('/test').send({ count: 2.2 });
+    expect(response.status).toBe(400);
+    expect(response.body.fields.count).toBe(
+      'The count field must be an integer.'
+    );
+  });
+
+  test('should pass integer validation', async () => {
+    app.post(
+      '/test',
+      validate({
+        count: 'integer',
+      }),
+      (_, res) => {
+        res.status(200).json({ message: 'Validation passed' });
+      }
+    );
+    const response = await request(app).post('/test').send({ count: 10 });
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Validation passed');
   });
