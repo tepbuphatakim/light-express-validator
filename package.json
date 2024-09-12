@@ -1,6 +1,6 @@
 {
   "name": "light-express-validator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A super lightweight express validation inspired by Laravel validation.",
   "main": "./src/index.js",
   "scripts": {
