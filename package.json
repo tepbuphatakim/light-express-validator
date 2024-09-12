@@ -1,18 +1,16 @@
 {
   "name": "light-express-validator",
   "version": "1.0.7",
-  "description": "A super lightweight express validator inspired by Laravel validation.",
+  "description": "A super lightweight express validation inspired by Laravel validation.",
   "main": "./src/index.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [
-    "express",
-    "validator",
-    "light",
-    "weight",
-    "express",
-    "validator"
+    "express validator",
+    "express validation",
+    "light express validator",
+    "light express validation"
   ],
   "author": "Tepbuphata Kim",
   "license": "MIT",
