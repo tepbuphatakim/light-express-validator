@@ -2,7 +2,7 @@ const express = require('express');
 const request = require('supertest');
 const validate = require('../index');
 
-describe('validator', () => {
+describe('validator express', () => {
   let app;
 
   beforeEach(() => {
