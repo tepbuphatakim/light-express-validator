@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { isImageFromBuffer } = require('../lib/utils/validation.js');
 
-describe('isImageFromBuffer', () => {
+describe('isImageFromBuffer function', () => {
   const testFilesDir = path.join(__dirname, 'files');
   const readTestFile = (filename) => {
     return fs.readFileSync(path.join(testFilesDir, filename));
