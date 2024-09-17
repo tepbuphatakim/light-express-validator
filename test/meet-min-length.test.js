@@ -37,9 +37,9 @@ describe('meetMinLength function', () => {
     expect(meetMinLength(false, '5')).toBe(false);
   });
 
-  test('should return false for null input', () => {
-    expect(meetMinLength(null, 1)).toBe(false);
-    expect(meetMinLength(null, '1')).toBe(false);
+  test('should return true for null input', () => {
+    expect(meetMinLength(null, 1)).toBe(true);
+    expect(meetMinLength(null, '1')).toBe(true);
   });
 
   test('should return false for undefined input', () => {

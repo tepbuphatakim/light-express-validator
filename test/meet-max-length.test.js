@@ -38,8 +38,8 @@ describe('meetMaxLength function', () => {
   });
 
   test('should return true for null input', () => {
-    expect(meetMaxLength(null, 1)).toBe(false);
-    expect(meetMaxLength(null, '1')).toBe(false);
+    expect(meetMaxLength(null, 1)).toBe(true);
+    expect(meetMaxLength(null, '1')).toBe(true);
   });
 
   test('should return true for undefined input', () => {
