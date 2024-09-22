@@ -12,7 +12,7 @@ describe('isBoolean function', () => {
     expect(isBoolean('TRUE')).toBe(true);
     expect(isBoolean('FALSE')).toBe(true);
     expect(isBoolean(' true ')).toBe(true);
-    expect(isBoolean(' false ')).toBe(false);
+    expect(isBoolean(' false ')).toBe(true);
   });
 
   test('should return true for 0 and 1', () => {
