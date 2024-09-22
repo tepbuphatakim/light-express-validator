@@ -39,4 +39,10 @@ describe('image express validation', () => {
       'The image field must be an image.'
     );
   });
+
+  test('should accept null', async () => {
+    const response = await request(app).post('/upload');
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Validation passed');
+  });
 });

@@ -34,8 +34,11 @@ describe('isValidDate function', () => {
     expect(isValidDate(Infinity)).toBe(false);
   });
 
+  test('should return true for null input', () => {
+    expect(isValidDate(null)).toBe(true);
+  });
+
   test('should return false for non-date types', () => {
-    expect(isValidDate(null)).toBe(false);
     expect(isValidDate(undefined)).toBe(false);
     expect(isValidDate({})).toBe(false);
     expect(isValidDate([])).toBe(false);

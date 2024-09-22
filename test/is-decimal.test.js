@@ -43,8 +43,11 @@ describe('isDecimal function', () => {
     expect(isDecimal('\t')).toBe(false);
   });
 
+  test('should return true for null input', () => {
+    expect(isDecimal(null)).toBe(true);
+  });
+
   test('should return false for non-numeric types', () => {
-    expect(isDecimal(null)).toBe(false);
     expect(isDecimal(undefined)).toBe(false);
     expect(isDecimal({})).toBe(false);
     expect(isDecimal([])).toBe(false);
