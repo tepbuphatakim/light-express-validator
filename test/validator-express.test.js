@@ -186,7 +186,7 @@ describe('validator express', () => {
         res.status(200).json({ message: 'Validation passed' });
       }
     );
-    const response = await request(app).post('/test').send({ is_vote: 1 });
+    const response = await request(app).post('/test').send({ is_vote: 'yes' });
     expect(response.status).toBe(400);
     expect(response.body.fields.is_vote).toBe(
       'The is_vote field must be true or false.'
