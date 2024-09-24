@@ -52,6 +52,7 @@ app.post('/user', validate(validationRules), (req, res) => {
 - `decimal:x`: Field must be a decimal with x decimal places
 - `boolean`: Field must be true or false
 - `date`: Field must be a valid date
+- `email`: Field must be a valid email
 - `image`: Field must be an image file (for file uploads)
 
 ### Handling Validation Errors
