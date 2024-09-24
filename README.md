@@ -61,9 +61,10 @@ If validation fails, the middleware will automatically send a 400 Bad Request re
 
 ```json
 {
-  "message": "Form validation failed",
+  "name": "ValidationError",
   "fields": {
-    "fieldName": "Error message for this field"
+    "name": "The name field must be at most 9 characters.",
+    "email": "The email field must be a valid email address."
   }
 }
 ```
